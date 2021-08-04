@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="retina" style="width:100%;"></canvas>
+    <script>
+        window.onload = function () {
+            createWorld();
+        }
+
+        function createWorld() {
+            var gl = initRender();//创建渲染器
+            var shaderProgram = initShaders(gl);//初始化着色器程序
+            var cameraMatrix = initCamera();//创建相机
+            initLight(gl, shaderProgram);//创建光源
+            var num = initObject(gl, shaderProgram);//创建物体
+            render(gl, num, shaderProgram, cameraMatrix);//渲染
+        }
+
+        // 创建渲染器
+        var width = window.innerWidth * window.devicePixelRatio;//实际尺寸为显示尺寸乘以设备像素比
+        var height = window.innerHeight * window.devicePixelRatio;
+        function initRender() {
+            var canvas = document.querySelector('#retina');
+            canvas.width = width;
+            canvas.height = height;
+            var gl = canvas.getContext('webgl');//获取webgl上下文
+            gl.clearColor(1.0, 1.0, 1.0, 1.0);//设置背景颜色
+            gl.enable(gl.DEPTH_TEST);//开启隐藏面消除
+            return gl;
+        }
+    </script>
+</body>
+
+</html>
